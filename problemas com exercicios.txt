@@ -1,0 +1,22 @@
+
+
+# CaptureVideoFromFile: 
+	ao tentar abrir o video: VideoCapture vc = new VideoCapture("videos/jeni.avi"); ele sempre entra nesse if:
+	
+	     if(!vc.isOpened())  // if not success, exit program
+	    {
+	      System.out.println("Cannot open the video file");
+	    }
+
+* possivel solução:
+	http://stackoverflow.com/questions/17401852/open-video-file-with-opencv-java
+
+
+
+
+#WriteVideoToFile:
+	classe VideoWriter não se encontra no package opencv.jar
+
+
+
+ 

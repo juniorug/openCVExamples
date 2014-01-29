@@ -35,7 +35,7 @@ public class WriteVideoToFile {
 	    
 	    Size frameSize = new Size(dWidth,dHeight);
 	    //initialize the VideoWriter object 
-	  //  VideoWriter vw = new  VideoWriter("D:/MyVideo.avi", CV_FOURCC('P','I','M','1'), 20, frameSize, true); 
+	    //VideoWriter vw = new  VideoWriter("D:/MyVideo.avi", CV_FOURCC('P','I','M','1'), 20, frameSize, true); 
 	    
 	    
 	}
