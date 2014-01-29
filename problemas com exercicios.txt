@@ -19,4 +19,5 @@
 
 
 
- 
+# filtering images (Inverting)
+	nao encontrado metodo para iverter, tentar usar metodo cvtColor.  
