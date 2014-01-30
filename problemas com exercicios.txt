@@ -20,4 +20,8 @@
 
 
 # filtering images (Inverting)
-	nao encontrado metodo para iverter, tentar usar metodo cvtColor.  
+	nao encontrado metodo para iverter, tentar usar metodo cvtColor. 
+
+
+#changeVideoBrightness
+	não consegui implementar a alteração; 
