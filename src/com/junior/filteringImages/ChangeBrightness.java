@@ -1,19 +1,21 @@
 package com.junior.filteringImages;
 
 import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.highgui.Highgui; 
 import org.opencv.imgproc.Imgproc;
 
 import View.LoadImage;
 
-public class BlurringImage {
-	
-	private static int BLUR_SIZE = 5;
-	
-	public static void main(String[] args) {
+public class ChangeBrightness {
 
+	private static double INCREASEBRIGHTNESS = 75;
+	private static double DECREASEBRIGHTNESS = -75;
+	public static void main(String[] args) 
+	{ 
 		System.loadLibrary( Core.NATIVE_LIBRARY_NAME );
 
 		
@@ -24,15 +26,19 @@ public class BlurringImage {
 	    }
 		else {
 			System.out.println("Success : Image loaded successfully..!!");
-
-			//image to be generated with blur effect
-			Mat destImg =new Mat(origImg.rows(),origImg.cols(),origImg.type());
-			destImg = origImg;
-	
-			Imgproc.blur(origImg, destImg, new Size(2*BLUR_SIZE + 1, 2*BLUR_SIZE+1));
-			new LoadImage("img/JellyfishBlur.jpg",destImg);
+			
+			new LoadImage("img/Jellyfish.jpg",origImg);
+			
+			Mat destImg = origImg;
+			destImg.convertTo(origImg, -1, 1, INCREASEBRIGHTNESS);
+			new LoadImage("img/JellyfishHighBrightness.jpg",destImg);
+			
+			destImg.convertTo(origImg, -1, 1, DECREASEBRIGHTNESS);
+			new LoadImage("img/JellyfishLowBrightness.jpg",destImg);
+			
+			
 		}
-
+		 
 	}
 
 }
