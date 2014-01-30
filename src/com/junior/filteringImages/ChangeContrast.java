@@ -10,13 +10,13 @@ import org.opencv.imgproc.Imgproc;
 
 import View.LoadImage;
 
-public class ChangeBrightness {
+public class ChangeContrast {
 
 	private static int RTYPE = -1;
-	private static double ALPHA = 1;
-	private static double INCREASEBRIGHTNESS = 75;
-	private static double DECREASEBRIGHTNESS = -75;
-	
+	private static double INCREASECONTRAST = 2;
+	private static double DECREASECONTRAST = 0.5;
+
+	private static double BETA = 0;
 	public static void main(String[] args) 
 	{ 
 		System.loadLibrary( Core.NATIVE_LIBRARY_NAME );
@@ -33,15 +33,14 @@ public class ChangeBrightness {
 			new LoadImage("img/Jellyfish.jpg",origImg);
 			
 			Mat destImg = origImg;
-			destImg.convertTo(origImg, RTYPE, ALPHA, INCREASEBRIGHTNESS);
-			new LoadImage("img/JellyfishHighBrightness.jpg",destImg);
+			destImg.convertTo(origImg, RTYPE, INCREASECONTRAST, BETA);
+			new LoadImage("img/JellyfishHighContrast.jpg",destImg);
 			
-			destImg.convertTo(origImg, RTYPE, ALPHA, DECREASEBRIGHTNESS);
-			new LoadImage("img/JellyfishLowBrightness.jpg",destImg);
+			destImg.convertTo(origImg, RTYPE, DECREASECONTRAST, BETA);
+			new LoadImage("img/JellyfishLowContrast.jpg",destImg);
 			
 			
 		}
 		 
 	}
-
 }
