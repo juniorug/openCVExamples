@@ -16,6 +16,8 @@ public class LoadImageFromFile
 		Mat m=Highgui.imread("img/Jellyfish.jpg",Highgui.CV_LOAD_IMAGE_COLOR);
 		new LoadImage("img/Jellyfish.jpg",m);
 		
+		System.out.println("image height: " + m.height());
+		System.out.println("image width: " + m.width());
 		m=Highgui.imread("img/Jellyfish.jpg",Highgui.CV_LOAD_IMAGE_GRAYSCALE);
 		new LoadImage("img/JellyfishGray.jpg",m);
     }
