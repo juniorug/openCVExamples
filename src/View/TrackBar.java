@@ -6,7 +6,11 @@ import java.awt.GridLayout;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -17,6 +21,7 @@ import javax.swing.border.Border;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
 import org.opencv.highgui.Highgui;
 
 import com.junior.opencv.Mat2Image;
@@ -33,6 +38,7 @@ public class TrackBar extends JFrame{
     private JScrollBar sbContrast;
     private JLabel lbBrightness;
     private JLabel lbContrast;
+    private JLabel label1; 
     private double brightness ;
     private double contrast;
     private static int ZERO = 0;
@@ -60,8 +66,8 @@ public class TrackBar extends JFrame{
 		brightness = ZERO;
 		contrast = INITIAL_CONTRAST;
 		//labels
-		lbBrightness = new JLabel("Brightness: "+ Double.toString(brightness));
-		lbContrast = new JLabel("Contrast: "+ Double.toString(contrast/INITIAL_CONTRAST));
+		lbBrightness = new JLabel("Brightness: "+ brightness);
+		lbContrast = new JLabel("Contrast: "+ Double.toString(contrast/INITIAL_CONTRAST).substring(0, 3));
 		
 		//scrollBars
         sbBrightness = new JScrollBar(JScrollBar.HORIZONTAL);
@@ -97,16 +103,26 @@ public class TrackBar extends JFrame{
     	rightPanel.add(lbContrast);
     	add(rightPanel,BorderLayout.WEST);
     	
-    	String imgStr = IMAGEPATH;
-    	//Mat m = Highgui.imread(imgStr,Highgui.CV_LOAD_IMAGE_COLOR);
-    	//ImageIcon image = new ImageIcon(imgStr);
-    	Mat2Image mat2Img = new Mat2Image(m);
-    	BufferedImage image = mat2Img.getImage(m);
-    	JLabel label1 = new JLabel(new ImageIcon(image), JLabel.CENTER); 
-	
+    	changeImageProperties();
+    	
     	this.getContentPane().add(label1); 
     	
-    	//add(graphicPanel,BorderLayout.CENTER);
+	}
+	private void changeImageProperties()
+	{
+		Mat image = Highgui.imread(IMAGEPATH);
+    	MatOfByte bytemat = new MatOfByte();
+    	Highgui.imencode(".jpg", image, bytemat);
+    	byte[] bytes = bytemat.toArray();
+    	InputStream in = new ByteArrayInputStream(bytes);
+    	BufferedImage img;
+		try {
+			img = ImageIO.read(in);
+			label1 = new JLabel(new ImageIcon(img), JLabel.CENTER); 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/*** sbActionListener(JScrollBar jsb)***/
@@ -120,16 +136,17 @@ public class TrackBar extends JFrame{
     			if (ae.getSource() == sbBrightness)
     			{
     				brightness = ae.getValue();
-    				//gc.setRed(r);
     				lbBrightness.setText("Brightness: "+ Double.toString(brightness));
+    				System.out.println("changing brightness: " + brightness);
     			}else if(ae.getSource() == sbContrast)
     			{
-    				contrast = ae.getValue()/INITIAL_CONTRAST;
-    				//gc.setGreen(g);
+    				contrast = (double)ae.getValue()/(double)INITIAL_CONTRAST;
     				lbContrast.setText("Contrast: "+ Double.toString(contrast/INITIAL_CONTRAST));
+    				System.out.println("changing contrast: " + contrast);
     			}
-				//gc.repaint();
     			m.convertTo(m, RTYPE, contrast, brightness);
+    			changeImageProperties();
+    			label1.repaint();
     		}
     	 });
     }    
